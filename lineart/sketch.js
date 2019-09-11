@@ -8,12 +8,22 @@
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background(25);
+  background(125);
 }
 
 function draw() {
-  line(mouseX, mouseY, pmouseX, pmouseY,);
   
+  if(mouseIsPressed){
+    if(mouseButton === LEFT)
+    line(mouseX, mouseY, pmouseX, pmouseY,);
+
+    if(mouseButton === CENTER)
+    background += backgroundchange
+
+
+
+
+  }
 
 
 }
