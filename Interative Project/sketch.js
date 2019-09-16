@@ -5,16 +5,18 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let img;
 let c;
 var audio = new Audio('assets/test.mp3');
+var img = ["assets/gangplank.png"];
 
 function preload(){
   // preload() runs once
-  img = loadImage("assets/gp.gif");
+  img = loadImage("assets/gangplank.png");
   soundFormats('mp3', 'oog');
+  
 }
 
+imageMode(CENTER);
 function setup() {
   // setup() waits untill preload() is done
   createCanvas(windowWidth, windowHeight);
@@ -25,7 +27,10 @@ function setup() {
 function draw(){
   background(c);
   image(img,25, 25, 50, 50);
-  
+}
+
+function windowResized(){
+  setup();
 }
 
 
