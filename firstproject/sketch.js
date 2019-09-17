@@ -5,6 +5,8 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
+x = width / 2;
+y = height;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);

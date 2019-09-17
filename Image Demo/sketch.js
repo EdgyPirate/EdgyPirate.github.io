@@ -9,12 +9,11 @@
 //Defines the var for gangplank
 let gangplank;
 
-Let scalar = 1;
+scalar = 1;
 
 //Preloads the image
 function preload(){
   gangplank = loadImage('assets/gangplank.png');
-  
 }
 
 function setup(){
@@ -25,18 +24,18 @@ function setup(){
 function draw(){
   background(255);
 
-  if (keyIsPressed{
-    if (keycode === UP_ARROW){
+  if (keyIsPressed){
+    if (keyCode === UP_ARROW){
       // Increase Image Size
       scalar *= 1.1;
     }
-    if (keycode === DOWN_ARROW){
+    if (keyCode === DOWN_ARROW){
       // Decrease Image Size
       scalar /= 1.1;
     }
   }
   imageMode(CENTER);
-  image(gangplank, mouseX, mouseY, nemo.diwth * scalar, nemo.hieght * scalar);
+  image(gangplank, mouseX, mouseY, gangplank.width * scalar, gangplank.height * scalar);
 }
 
 

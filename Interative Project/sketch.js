@@ -4,39 +4,51 @@
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
+let x, y;
 
 let c;
-var audio = new Audio('assets/test.mp3');
-var img = ["assets/gangplank.png"];
+//var audio = new Audio('assets/test.mp3');
+var gangplank = ["assets/gangplank.png"];
 
+// preload() runs once //
 function preload(){
-  // preload() runs once
-  img = loadImage("assets/gangplank.png");
-  soundFormats('mp3', 'oog');
-  
+  gangplank = loadImage("assets/gangplank.png");
+  //soundFormats('mp3', 'oog');
 }
 
-imageMode(CENTER);
+// setup() waits untill preload() is done //
 function setup() {
-  // setup() waits untill preload() is done
   createCanvas(windowWidth, windowHeight);
+  x = width / 2;
+  y = height /2;
   background(125);
-  image(img, 0, 0);
+  image(gangplank,x,y);
 }
 
 function draw(){
-  background(c);
-  image(img,25, 25, 50, 50);
+  background(125);
+  imageMode(CENTER);
+  image(gangplank,x,y,50,50);
 }
 
 function windowResized(){
   setup();
 }
 
-
+// plays audio on keypress //
 function keyPressed(){
-  if (key === "w");
-  audio.play();
-  //document.getElementById('assets/test.mp3').play();
-  
+  if (key === "w"){
+    (y += -10)
+  }
+  if (key === "s"){
+    (y += 10)
+  }
+  if (key === "a"){
+      (x += -10)
+  }
+  if (key === "d"){
+      (x += 10)
+  }
 }
+// if (key === "w");
+//  audio.play();ss
