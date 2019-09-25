@@ -24,6 +24,8 @@ function setup() {
 
 function draw(){
   background(125);
+  textAlign(width/2, height/2)
+  text('a', width/2, height/2, 0, 0)
 }
 
 function windowResized(){
