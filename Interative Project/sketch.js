@@ -32,6 +32,11 @@ function windowResized(){
   setup();
 }
 
+function mouseClicked(LEFT){
+  noteA.setVolume();
+  noteA.play();
+}
+
 // corresponds with a sound of the piano
 function keyTyped(){
   if (key === 'a' ){
