@@ -6,16 +6,14 @@
 // - describe what you did to take this project "above and beyond"
 
 let state = 'menu';
+let img;
+let Whichnote;
 
 function preload(){
   soundFormats('mp3')
-  noteA = loadSound('assets/noteA.mp3')
-  noteB = loadSound('assets/noteB.mp3')
-  noteC = loadSound('assets/noteC.mp3')
-  noteD = loadSound('assets/noteD.mp3')
-  noteE = loadSound('assets/noteE.mp3')
-  noteF = loadSound('assets/noteF.mp3')
-  noteG = loadSound('assets/noteG.mp3')
+  noteA = loadSound('assets/noteA.mp3'), noteB = loadSound('assets/noteB.mp3'), noteC = loadSound('assets/noteC.mp3'), noteD = loadSound('assets/noteD.mp3')
+  noteE = loadSound('assets/noteE.mp3'), noteF = loadSound('assets/noteF.mp3'), noteG = loadSound('assets/noteG.mp3')
+  img = loadImage('assets/homeButton.png')
 }
 
 function setup() {
@@ -26,16 +24,21 @@ function draw(){
   background(125);
   if (state === 'menu'){
     showMenu();
+    detectionofmenu();
   }
-
   if (state === 'piano'){
     background(75);
-    pianokeys();
+    imageMode(CENTER)
+    image(img, 50, 50, 50, 50)
+    returnHomeDetection();
+    playPianoNote(noteB);
   }
-
   if (state === 'guitar'){
     background(0);
-    // guitarstrings();
+    //guitarstrings();
+    imageMode(CENTER)
+    image(img, 50, 50, 50, 50)
+    returnHomeDetection();
   }
 }
 
@@ -43,37 +46,13 @@ function windowResized(){
   setup();
 }
 
-
 // corresponds with a sound of the piano
-function pianokeys(){
-  if (key === 'a' ){
-    noteA.setVolume(0.5)
-    noteA.play();
-    text(key, 50, 50)
-  }else if(key === 'b' ){
-    noteB.setVolume(0.5)
-    noteB.play();
+function playPianoNote(Whichnote) {
+  if (key === 'a'){
+    Whichnote= noteA;
+    }
+    Whichnote.play();
   }
-  else if(key === 'c' ){
-    noteC.setVolume(0.5)
-    noteC.play();
-  }else if(key === 'd' ){
-    noteD.setVolume(0.4)
-    noteD.play();
-  }
-  else if(key === 'e' ){
-    noteE.setVolume(0.5)
-    noteE.play();
-  }
-  else if(key === 'f' ){
-    noteF.setVolume(0.25)
-    noteF.play();
-  }
-  else if(key === 'g' ){
-    noteG.setVolume(0.10)
-    noteG.play();
-  }
-}
 
 // function guitarstrings(){
 //   if (key === 'a'){
@@ -117,5 +96,14 @@ function detectionofmenu(){
       mouseY > height/2 + 100 - 75 && mouseY < height/2 + 100 + 75){
         state = 'guitar';
       }
+    }
   }
-}
+
+function returnHomeDetection(){
+  if (state === 'guitar' || state === 'piano'){
+    if (mouseX > 100 + 50 && mouseX < 150 - 50 &&
+      mouseY > 100 - 50 && mouseX < 150 + 50){
+      state = 'menu'
+    }
+  }
+} 
