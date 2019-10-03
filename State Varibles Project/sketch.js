@@ -7,7 +7,8 @@
 
 let state = 'menu';
 let img;
-let Whichnote;
+let noteA, noteB, noteC, noteD, noteE, noteF, noteG;
+let vol;
 
 function preload(){
   soundFormats('mp3')
@@ -31,7 +32,6 @@ function draw(){
     imageMode(CENTER)
     image(img, 50, 50, 50, 50)
     returnHomeDetection();
-    playPianoNote(noteB);
   }
   if (state === 'guitar'){
     background(0);
@@ -45,26 +45,11 @@ function draw(){
 function windowResized(){
   setup();
 }
-
 // corresponds with a sound of the piano
-function playPianoNote(Whichnote) {
-  if (key === 'a'){
-    Whichnote= noteA;
-    }
-    Whichnote.play();
-  }
-
-// function guitarstrings(){
-//   if (key === 'a'){
-//     guitarA.volume(0.5);
-//     guitarA.play();
-//   }
-//   else if (key === 'b'){
-//     guitarB.volume(0.5);
-//     guitarB.play();
-//   }
-// }
-
+function playPianoNote(whichNote,howLoud) {
+  whichNote.setVolume(howLoud)
+  whichNote.play();
+} 
 function showMenu(){
   // shows panel for piano
   rectMode(CENTER);
@@ -84,7 +69,6 @@ function showMenu(){
   fill(0);
   text('Guitar', width/2, height/2 + 100);
 }
-
 function detectionofmenu(){
   if (mouseIsPressed){
     //checks if click is in hitbox
@@ -98,12 +82,39 @@ function detectionofmenu(){
       }
     }
   }
-
 function returnHomeDetection(){
-  if (state === 'guitar' || state === 'piano'){
-    if (mouseX > 100 + 50 && mouseX < 150 - 50 &&
-      mouseY > 100 - 50 && mouseX < 150 + 50){
+  if (state === 'piano' || state === 'guitar'){
+    if(mouseIsPressed){
+    if (mouseX > 25 && mouseX < 75 &&
+      mouseY > 25 && mouseY < 75){
       state = 'menu'
+    }
     }
   }
 } 
+
+function keyPressed(){
+  if (state === 'piano'){
+  if (key === 'a'){
+    playPianoNote(noteA, 0.5);
+  }
+  else if (key === 'b'){
+    playPianoNote(noteB, 0.5);
+  }
+  else if (key === 'c'){
+    playPianoNote(noteC, 0.45);
+  }
+  else if (key === 'd'){
+    playPianoNote(noteD, 0.4);
+  }
+  else if (key === 'e'){
+    playPianoNote(noteE, 0.35);
+  }
+  else if (key === 'f'){
+    playPianoNote(noteF, 0.3);
+  }
+  else if (key === 'g'){
+    playPianoNote(noteG, 0.25);
+  }
+  }
+}
