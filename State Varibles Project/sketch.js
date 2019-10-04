@@ -95,26 +95,26 @@ function returnHomeDetection(){
 
 function keyPressed(){
   if (state === 'piano'){
-  if (key === 'a'){
-    playPianoNote(noteA, 0.5);
-  }
-  else if (key === 'b'){
-    playPianoNote(noteB, 0.5);
-  }
-  else if (key === 'c'){
-    playPianoNote(noteC, 0.45);
-  }
-  else if (key === 'd'){
-    playPianoNote(noteD, 0.4);
-  }
-  else if (key === 'e'){
-    playPianoNote(noteE, 0.35);
-  }
-  else if (key === 'f'){
-    playPianoNote(noteF, 0.3);
-  }
-  else if (key === 'g'){
-    playPianoNote(noteG, 0.25);
-  }
+    if (key === 'a'){
+      playPianoNote(noteA, 0.5);
+   }
+    else if (key === 'b'){
+      playPianoNote(noteB, 0.5);
+    }
+   else if (key === 'c'){
+     playPianoNote(noteC, 0.45);
+    }
+   else if (key === 'd'){
+      playPianoNote(noteD, 0.4);
+    }
+   else if (key === 'e'){
+     playPianoNote(noteE, 0.35);
+   }
+   else if (key === 'f'){
+      playPianoNote(noteF, 0.3);
+   }
+    else if (key === 'g'){
+     playPianoNote(noteG, 0.25);
+   }
   }
 }
