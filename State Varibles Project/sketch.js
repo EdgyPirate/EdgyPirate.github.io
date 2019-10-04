@@ -1,19 +1,21 @@
 // keyboard and guitar
 // Blazingsky Carrier 
-// Sep 27, 2019
+// oct 4, 2019
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
 let state = 'menu';
 let img;
-let noteA, noteB, noteC, noteD, noteE, noteF, noteG;
+let noteA, noteB, noteC, noteD, noteE, noteF, noteG,
+stringA, stringB, stringC, stringD, stringE, stringF, stringG;
 let vol;
 
 function preload(){
   soundFormats('mp3')
   noteA = loadSound('assets/noteA.mp3'), noteB = loadSound('assets/noteB.mp3'), noteC = loadSound('assets/noteC.mp3'), noteD = loadSound('assets/noteD.mp3')
   noteE = loadSound('assets/noteE.mp3'), noteF = loadSound('assets/noteF.mp3'), noteG = loadSound('assets/noteG.mp3')
+  stringA = loadSound('assets/stringA.mp3')
   img = loadImage('assets/homeButton.png')
 }
 
@@ -45,18 +47,26 @@ function draw(){
 function windowResized(){
   setup();
 }
-// corresponds with a sound of the piano
+
+// function which is called upon to play notes
 function playPianoNote(whichNote,howLoud) {
   whichNote.setVolume(howLoud)
   whichNote.play();
 } 
+
+// function calls upon to play notes in a state
+function playGuitarString(whichNote, howLoud) {
+  whichNote.setVolume(howLoud);
+  whichNote.play();
+}
+
+// draws menus of piano or guitar
 function showMenu(){
   // shows panel for piano
   rectMode(CENTER);
   fill(0, 90 , 200 , 125);
   rect(width/2, height/2 - 100, 400, 150);
-  textAlign(CENTER, CENTER);
-  textSize(75);
+  textAlign(CENTER, CENTER), textSize(75);
   fill(0);
   text('Piano', width/2, height/2 - 100);
   
@@ -64,11 +74,12 @@ function showMenu(){
   rectMode(CENTER);
   fill(255, 0 , 0 , 125);
   rect(width/2, height/2 + 100, 400, 150);
-  textAlign(CENTER, CENTER);
-  textSize(75);
+  textAlign(CENTER, CENTER), textSize(75);
   fill(0);
   text('Guitar', width/2, height/2 + 100);
 }
+
+// x and y hitboxes for menus
 function detectionofmenu(){
   if (mouseIsPressed){
     //checks if click is in hitbox
@@ -82,6 +93,8 @@ function detectionofmenu(){
       }
     }
   }
+
+// hitbox for the home image
 function returnHomeDetection(){
   if (state === 'piano' || state === 'guitar'){
     if(mouseIsPressed){
@@ -93,6 +106,7 @@ function returnHomeDetection(){
   }
 } 
 
+// plays piano keys when in state piano
 function keyPressed(){
   if (state === 'piano'){
     if (key === 'a'){
@@ -117,4 +131,9 @@ function keyPressed(){
      playPianoNote(noteG, 0.25);
    }
   }
+  // if (state === 'guitar'){
+  //  if (key === 'a'){
+  //  playGuitarString(stringA, 0.5);
+ //   }
+  //}
 }
