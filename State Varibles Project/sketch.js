@@ -1,22 +1,24 @@
-// keyboard and guitar
+// Keyboard and Guitar Interactive Keyboard
 // Blazingsky Carrier 
-// oct 4, 2019
-//
+// Oct 9, 2019
+// controls - letters a - g on the keyboard play a note or chord
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
 let state = 'menu';
 let img;
-let noteA, noteB, noteC, noteD, noteE, noteF, noteG,
-stringA, stringB, stringC, stringD, stringE, stringF, stringG;
 let vol;
 
+
 function preload(){
-  soundFormats('mp3')
+  soundFormats('mp3', 'wav');
   noteA = loadSound('assets/noteA.mp3'), noteB = loadSound('assets/noteB.mp3'), noteC = loadSound('assets/noteC.mp3'), noteD = loadSound('assets/noteD.mp3')
-  noteE = loadSound('assets/noteE.mp3'), noteF = loadSound('assets/noteF.mp3'), noteG = loadSound('assets/noteG.mp3')
-  stringA = loadSound('assets/stringA.mp3')
-  img = loadImage('assets/homeButton.png')
+  noteE = loadSound('assets/noteE.mp3'), noteF = loadSound('assets/noteF.mp3'), noteG = loadSound('assets/noteG.mp3');
+  
+  chordA = loadSound('assets/chord-A.wav'), chordC = loadSound('assets/chord-C.wav'), chordD = loadSound('assets/chord-D.wav') //chordB = loadSound('assets/chord-B.wav')
+  chordE = loadSound('assets/chord-E.wav'), chordF = loadSound('assets/chord-F.wav'), chordG = loadSound('assets/chord-G.wav');
+
+  img = loadImage('assets/homeButton.png');
 }
 
 function setup() {
@@ -24,22 +26,21 @@ function setup() {
 }
 
 function draw(){
-  background(125);
+  background(225 , 200 , 0)
   if (state === 'menu'){
     showMenu();
-    detectionofmenu();
+    detectionOfMenu();
   }
   if (state === 'piano'){
     background(75);
-    imageMode(CENTER)
-    image(img, 50, 50, 50, 50)
+    imageMode(CENTER);
+    image(img, 50, 50, 50, 50);
     returnHomeDetection();
   }
   if (state === 'guitar'){
     background(0);
-    //guitarstrings();
-    imageMode(CENTER)
-    image(img, 50, 50, 50, 50)
+    imageMode(CENTER);
+    image(img, 50, 50, 50, 50);
     returnHomeDetection();
   }
 }
@@ -50,21 +51,21 @@ function windowResized(){
 
 // function which is called upon to play notes
 function playPianoNote(whichNote,howLoud) {
-  whichNote.setVolume(howLoud)
+  whichNote.setVolume(howLoud);
   whichNote.play();
 } 
 
 // function calls upon to play notes in a state
-function playGuitarString(whichNote, howLoud) {
-  whichNote.setVolume(howLoud);
-  whichNote.play();
+function playGuitarString(whichChord, howLoud) {
+  whichChord.setVolume(howLoud);
+  whichChord.play();
 }
 
 // draws menus of piano or guitar
 function showMenu(){
   // shows panel for piano
   rectMode(CENTER);
-  fill(0, 90 , 200 , 125);
+  fill(10, 70, 70, 100);
   rect(width/2, height/2 - 100, 400, 150);
   textAlign(CENTER, CENTER), textSize(75);
   fill(0);
@@ -72,7 +73,7 @@ function showMenu(){
   
   // shows panel for guitar
   rectMode(CENTER);
-  fill(255, 0 , 0 , 125);
+  fill(0, 25 , 200 , 175);
   rect(width/2, height/2 + 100, 400, 150);
   textAlign(CENTER, CENTER), textSize(75);
   fill(0);
@@ -80,7 +81,7 @@ function showMenu(){
 }
 
 // x and y hitboxes for menus
-function detectionofmenu(){
+function detectionOfMenu(){
   if (mouseIsPressed){
     //checks if click is in hitbox
     if (mouseX > width/2 - 200 && mouseX < width/2 + 200 &&
@@ -100,7 +101,7 @@ function returnHomeDetection(){
     if(mouseIsPressed){
     if (mouseX > 25 && mouseX < 75 &&
       mouseY > 25 && mouseY < 75){
-      state = 'menu'
+      state = 'menu';
     }
     }
   }
@@ -131,9 +132,24 @@ function keyPressed(){
      playPianoNote(noteG, 0.25);
    }
   }
-  // if (state === 'guitar'){
-  //  if (key === 'a'){
-  //  playGuitarString(stringA, 0.5);
- //   }
-  //}
+  if (state === 'guitar'){
+    if (key === 'a'){
+    playGuitarString(chordA, 0.5);
+    }
+    else if (key === 'c'){
+    playGuitarString(chordC, 0.5);
+    }
+    else if (key === 'd'){
+    playGuitarString(chordD, 0.5);
+    }
+    else if (key === 'e'){
+    playGuitarString(chordE, 0.5);
+    }
+    else if (key === 'f'){
+    playGuitarString(chordF, 0.5);
+    }
+    else if (key === 'g'){
+    playGuitarString(chordG, 0.5);
+    } 
+  }
 }
