@@ -9,6 +9,7 @@ let state = 'menu';
 let img;
 let vol;
 
+let pianoSounds = []
 
 function preload(){
   soundFormats('mp3', 'wav');
@@ -23,10 +24,17 @@ function preload(){
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  pianoSounds.push(noteA)
+  pianoSounds.push(noteB)
+  pianoSounds.push(noteC)
+  pianoSounds.push(noteD)
+  pianoSounds.push(noteE)
+  pianoSounds.push(noteF)
+  pianoSounds.push(noteG)
 }
 
 function draw(){
-  background(225 , 200 , 0)
+  background(120)
   if (state === 'menu'){
     showMenu();
     detectionOfMenu();
@@ -65,7 +73,7 @@ function playGuitarString(whichChord, howLoud) {
 function showMenu(){
   // shows panel for piano
   rectMode(CENTER);
-  fill(10, 70, 70, 100);
+  fill(0, 100, 255);
   rect(width/2, height/2 - 100, 400, 150);
   textAlign(CENTER, CENTER), textSize(75);
   fill(0);
@@ -73,7 +81,7 @@ function showMenu(){
   
   // shows panel for guitar
   rectMode(CENTER);
-  fill(0, 25 , 200 , 175);
+  fill(0, 240 , 250);
   rect(width/2, height/2 + 100, 400, 150);
   textAlign(CENTER, CENTER), textSize(75);
   fill(0);
@@ -151,5 +159,12 @@ function keyPressed(){
     else if (key === 'g'){
     playGuitarString(chordG, 0.5);
     } 
+  }
+}
+
+function mousePressed(){
+  if (state === 'piano'){
+    let play = random(pianoSounds);
+    playPianoNote(play,0.5);
   }
 }
