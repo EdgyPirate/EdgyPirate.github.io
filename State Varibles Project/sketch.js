@@ -31,6 +31,8 @@ function setup() {
   pianoSounds.push(noteE)
   pianoSounds.push(noteF)
   pianoSounds.push(noteG)
+  fill(100,100,100);
+  textSize(50)
 }
 
 function draw(){
@@ -44,6 +46,7 @@ function draw(){
     imageMode(CENTER);
     image(img, 50, 50, 50, 50);
     returnHomeDetection();
+    keyResponse();
   }
   if (state === 'guitar'){
     background(0);
@@ -168,3 +171,10 @@ function mousePressed(){
     playPianoNote(play,0.5);
   }
 }
+
+// function keyResponse() {
+//   if (state === 'piano' || state === 'guitar'){
+//     if (key === )
+//     text(key, width/2, height/2);
+//   }
+// }
