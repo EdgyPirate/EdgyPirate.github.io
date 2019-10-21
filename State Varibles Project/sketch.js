@@ -1,7 +1,10 @@
 // Keyboard and Guitar Interactive Keyboard
 // Blazingsky Carrier 
 // Oct 9, 2019
-// controls - letters a - g on the keyboard play a note or chord
+//
+// controls - letters a to g on the keyboard play a note or chord on piano or guitar mode
+// mouse1 click for a random note (guitar only)
+//
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
@@ -10,6 +13,7 @@ let img;
 let vol;
 
 let pianoSounds = []
+let guitarSounds = []
 
 function preload(){
   soundFormats('mp3', 'wav');
@@ -24,13 +28,13 @@ function preload(){
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  pianoSounds.push(noteA)
-  pianoSounds.push(noteB)
-  pianoSounds.push(noteC)
-  pianoSounds.push(noteD)
-  pianoSounds.push(noteE)
-  pianoSounds.push(noteF)
-  pianoSounds.push(noteG)
+
+  pianoSounds.push(noteA), pianoSounds.push(noteB), pianoSounds.push(noteC), pianoSounds.push(noteD)
+  pianoSounds.push(noteE), pianoSounds.push(noteF), pianoSounds.push(noteG)
+
+  guitarSounds.push(chordA), guitarSounds.push(chordC), guitarSounds.push(chordD), guitarSounds.push(chordE)
+  guitarSounds.push(chordF), guitarSounds.push(chordG)
+
   fill(100,100,100);
   textSize(50)
 }
@@ -46,7 +50,8 @@ function draw(){
     imageMode(CENTER);
     image(img, 50, 50, 50, 50);
     returnHomeDetection();
-    keyResponse();
+    drawNotes();
+    keyClickDetection();
   }
   if (state === 'guitar'){
     background(0);
@@ -118,7 +123,7 @@ function returnHomeDetection(){
   }
 } 
 
-// plays piano keys when in state piano
+// plays piano keys when in state piano and guitar chords when in guitar state
 function keyPressed(){
   if (state === 'piano'){
     if (key === 'a'){
@@ -165,16 +170,71 @@ function keyPressed(){
   }
 }
 
-function mousePressed(){
+// hitboxes for the piano keys
+function keyClickDetection(){
   if (state === 'piano'){
-    let play = random(pianoSounds);
-    playPianoNote(play,0.5);
+    if (mouseIsPressed){
+      if (mouseX > width - 475 && mouseX < width - 325 &&
+        mouseY > 195 && mouseY < 595){
+          playPianoNote(noteG,0.5);
+        }
+      else if (mouseX > width - 625 && mouseX < width - 475 &&
+        mouseY > 195 && mouseY < 595){
+          playPianoNote(noteF,0.5);
+        }
+      else if (mouseX > width - 775 && mouseX < width - 625 &&
+        mouseY > 195 && mouseY < 595){
+          playPianoNote(noteE,0.5);
+        }
+      else if (mouseX > width - 925 && mouseX < width - 775 &&
+        mouseY > 195 && mouseY < 595){
+          playPianoNote(noteD,0.5);
+        } 
+      else if (mouseX > width - 1075 && mouseX < width - 925 &&
+        mouseY > 195 && mouseY < 595){
+          playPianoNote(noteC,0.5);
+        }
+      else if (mouseX > width - 1225 && mouseX < width - 1075 &&
+        mouseY > 195 && mouseY < 595){
+          playPianoNote(noteB,0.5);
+        } 
+      else if (mouseX > width - 1375 && mouseX < width - 1225 &&
+        mouseY > 195 && mouseY < 595){
+          playPianoNote(noteA,0.5);
+        }   
+      }
+    }
+  }
+
+function mouseClicked(){
+    if (state === 'guitar'){
+      let play = random(guitarSounds);
+      playGuitarString(play, 0.5);
+    }
+  } 
+
+// draws the notes on the canvas **needs work**
+function drawNotes(){
+  if (state === 'piano'){
+    
+    fill(255);
+    // MAKE A FOR LOOP SOON
+    rect(width - 400, height/2, 150, 400);
+    rect(width - 550, height/2, 150, 400);
+    rect(width - 700, height/2, 150, 400);
+    rect(width - 850, height/2, 150, 400);
+    rect(width - 1000, height/2, 150, 400);
+    rect(width - 1150, height/2, 150, 400);
+    rect(width - 1300, height/2, 150, 400);
+    
+    
+    fill(0);
+    text('G', width - 400, height/2);
+    text('F', width - 550, height/2);
+    text('E', width - 700, height/2);
+    text('D', width - 850, height/2);
+    text('C', width - 1000, height/2);
+    text('B', width - 1150, height/2);
+    text('A', width - 1300, height/2);
   }
 }
-
-// function keyResponse() {
-//   if (state === 'piano' || state === 'guitar'){
-//     if (key === )
-//     text(key, width/2, height/2);
-//   }
-// }
