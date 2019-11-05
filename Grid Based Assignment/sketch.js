@@ -13,14 +13,16 @@ function setup() {
       createCanvas(windowWidth, windowWidth);
     }
   grid = createRandom2dArray(cols, rows);
-  grid[playerY][playerX] = 1;
 }
 
 function draw() {
-  background(220);
+  background(200);
   menu();
-  if (state === 'gamestart')
-  displayGrid(grid, rows, cols);
+  grid[playerY][playerX] = 2;
+  if (state === 'gamestart'){
+    displayGrid(grid, rows, cols);
+    // grid[playerX][playerY] = 1; // creates weird seizure and another player?
+  }
 }
 
 function windowResized() {
@@ -31,10 +33,10 @@ function windowResized() {
     createCanvas(windowWidth, windowWidth);
   }
 }
-
-function keyTyped() {
+function keyPressed() {
   if (state === 'gamestart'){
-    grid[playerY][playerX] = 0;
+    //  the path the player leaves behind
+    grid[playerY][playerX] = 2;
 
     // moves
     if (key === "w" && playerY > 0) {
@@ -49,9 +51,7 @@ function keyTyped() {
     if (key === "d" && playerX < rows -1) {
       playerX += 1;
     }
-
-    grid[playerY][playerX] = 1;
-    console.log(playerX, playerY)
+    console.log(grid[playerY][playerX])
   }
 }
 
@@ -63,15 +63,15 @@ function mousePressed() {
   if (state = 'menu'){
     if (mouseX > 400 && mouseX < 600 &&
       mouseY > 200 && mouseY < 400){
-      state = 'gamestart'
-      }
+      state = 'gamestart';
+    }
   }
   if (state = 'gamestart'){
     if (grid[yCoord][xCoord] === 1) {
       grid[yCoord][xCoord] = 0;
     }
     else {
-      grid[yCoord][xCoord] = 1;
+      grid[yCoord][xCoord] = 0;
     }
   }
 }
@@ -87,7 +87,6 @@ function createEmptyGrid() {
   return emptyGrid;
 }
 
-
 function displayGrid(grid, rows, cols) {
   let cellSize = width / cols;
   for (let y = 0; y < rows; y++) {
@@ -95,8 +94,11 @@ function displayGrid(grid, rows, cols) {
       if (grid[y][x] === 0) {
         fill(255);
       }
-      else {
+      else if (grid[y][x] === 1){
         fill(0);
+      }
+      else{ // changes the color of the player
+        fill(175,0,0);
       }
       rect(x*cellSize, y*cellSize, cellSize, cellSize);
     }
@@ -121,6 +123,15 @@ function createRandom2dArray(cols, rows) {
 
 function menu(){
   if (state === 'menu'){
-    rect(100,100,400,200);
+    text('Click anywhere to start', 325,400)
   }
 }
+
+// function win(){
+//   if (grid === grid[playerY][playerX]){
+//     state = 'win'
+//     if (state === 'win'){
+//       text('you win', 200, 200);
+//     }
+//   }
+// }
