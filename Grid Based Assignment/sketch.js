@@ -1,6 +1,6 @@
 let grid;
-let rows = 30;
-let cols = 30;
+let rows = 20;
+let cols = 20;
 let state = 'menu'
 let playerX = 15;
 let playerY = 15;
@@ -21,7 +21,10 @@ function draw() {
   grid[playerY][playerX] = 2;
   if (state === 'gamestart'){
     displayGrid(grid, rows, cols);
-    // grid[playerX][playerY] = 1; // creates weird seizure and another player?
+    blockAI();
+  }
+  if (state === 'AImirror'){
+    grid[playerX][playerY] = 0;  // mirrors ai
   }
 }
 
@@ -33,27 +36,49 @@ function windowResized() {
     createCanvas(windowWidth, windowWidth);
   }
 }
-function keyPressed() {
-  if (state === 'gamestart'){
-    //  the path the player leaves behind
-    grid[playerY][playerX] = 2;
+// function keyPressed() {
+//   if (state === 'gamestart'){
+//     //  the path the player leaves behind
+//     grid[playerY][playerX] = 2;
 
-    // moves
-    if (key === "w" && playerY > 0) {
-      playerY -= 1;
+//     // moves
+//     if (key === "w" && playerY > 0) {
+//       playerY -= 1;
+//     }
+//     if (key === "s" && playerY < cols -1 ){
+//       playerY += 1;
+//     }
+//     if (key === "a" && playerX > 0) {
+//       playerX -= 1;
+//     }
+//     if (key === "d" && playerX < rows -1) {
+//       playerX += 1;
+//     }
+//     console.log(grid[playerY][playerX])
+//   }
+// }
+
+function blockAI(){
+  if (state === 'gamestart'){
+    grid[playerY][playerX] = 2;
+    if (grid != grid[playerY][playerX]){
+      let math = random(1, 100);
+      if (math < 25 && playerY > 0){
+        playerY -= 1;
+      }
+      else if (math < 50 && playerY < cols -1){
+        playerY += 1;
+      }
+      else if (math < 75 && playerX > 0){
+        playerX -= 1;
+      }
+      else if (math < 100 && playerX < rows -1){
+        playerX += 1;
+      }
     }
-    if (key === "s" && playerY < cols -1 ){
-      playerY += 1;
-    }
-    if (key === "a" && playerX > 0) {
-      playerX -= 1;
-    }
-    if (key === "d" && playerX < rows -1) {
-      playerX += 1;
-    }
-    console.log(grid[playerY][playerX])
   }
 }
+
 
 function mousePressed() {
   let cellSize = width/cols;
