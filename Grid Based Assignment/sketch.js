@@ -1,31 +1,41 @@
+//Blazingsky Carrier
+//Grid Based Assignment
+//Nov 12
+
+//controls 
+//cells under the mouse cursor change underneath it
+
 let grid;
 let rows = 20;
 let cols = 20;
 let state = 'menu'
-let playerX = 15;
-let playerY = 15;
+
+//adjusts the starting pos of the block
+let playerX = 10;
+let playerY = 10;
 
 function setup() {
-    if (windowWidth > windowHeight) {
-      createCanvas(windowHeight, windowHeight);
-    }
-    else {
-      createCanvas(windowWidth, windowWidth);
-    }
+  if (windowWidth > windowHeight) {
+    createCanvas(windowHeight, windowHeight);
+  }
+  else {
+    createCanvas(windowWidth, windowWidth);
+  }
   grid = createRandom2dArray(cols, rows);
 }
 
 function draw() {
   background(200);
   menu();
-  grid[playerY][playerX] = 2;
   if (state === 'gamestart'){
     displayGrid(grid, rows, cols);
+    stroke(10);
     blockAI();
+    mouseHoover();
   }
-  if (state === 'AImirror'){
-    grid[playerX][playerY] = 0;  // mirrors ai
-  }
+  // if (state === 'AImirror'){
+  //   grid[playerX][playerY] = 0;  // mirrors ai
+  // }
 }
 
 function windowResized() {
@@ -36,27 +46,6 @@ function windowResized() {
     createCanvas(windowWidth, windowWidth);
   }
 }
-// function keyPressed() {
-//   if (state === 'gamestart'){
-//     //  the path the player leaves behind
-//     grid[playerY][playerX] = 2;
-
-//     // moves
-//     if (key === "w" && playerY > 0) {
-//       playerY -= 1;
-//     }
-//     if (key === "s" && playerY < cols -1 ){
-//       playerY += 1;
-//     }
-//     if (key === "a" && playerX > 0) {
-//       playerX -= 1;
-//     }
-//     if (key === "d" && playerX < rows -1) {
-//       playerX += 1;
-//     }
-//     console.log(grid[playerY][playerX])
-//   }
-// }
 
 function blockAI(){
   if (state === 'gamestart'){
@@ -86,8 +75,7 @@ function mousePressed() {
   let xCoord = floor(mouseX / cellSize);
   let yCoord = floor(mouseY / cellSize);
   if (state = 'menu'){
-    if (mouseX > 400 && mouseX < 600 &&
-      mouseY > 200 && mouseY < 400){
+    if (mouseX > windowWidth && mouseY > windowHeight){
       state = 'gamestart';
     }
   }
@@ -122,7 +110,7 @@ function displayGrid(grid, rows, cols) {
       else if (grid[y][x] === 1){
         fill(0);
       }
-      else{ // changes the color of the player
+      else{ // changes the color of the block
         fill(175,0,0);
       }
       rect(x*cellSize, y*cellSize, cellSize, cellSize);
@@ -152,11 +140,29 @@ function menu(){
   }
 }
 
-// function win(){
-//   if (grid === grid[playerY][playerX]){
-//     state = 'win'
-//     if (state === 'win'){
-//       text('you win', 200, 200);
+
+function mouseHoover(){
+  let cellSize = width/cols;
+  let xCoord = floor(mouseX / cellSize);
+  let yCoord = floor(mouseY / cellSize);
+
+  if (grid[yCoord][xCoord] === 1 || 2) {
+    grid[yCoord][xCoord] = 0;
+  }
+}
+
+// function timer(){
+//   if (state === 'gamestart'){
+//     if (millis > 10000){
+//       if(grid[yCoord][xCoord] != 2){
+//         state === 'win';
+//       }
 //     }
+//   }
+// }
+
+// function win(){
+//   if (state === 'win'){
+//     text('you win', 100,100,100)
 //   }
 // }
