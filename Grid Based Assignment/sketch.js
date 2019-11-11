@@ -4,15 +4,22 @@
 
 //controls 
 //cells under the mouse cursor change underneath it
+//wasd keyboard movement
 
 let grid;
 let rows = 20;
 let cols = 20;
 let state = 'menu'
 
-//adjusts the starting pos of the block
+//adjusts the starting pos of the player block
 let playerX = 10;
 let playerY = 10;
+
+let randomX = 13;
+let randomY = 17;
+
+// let randomX = round(random(0,19));
+// let randomY = round(random(0,19));
 
 function setup() {
   if (windowWidth > windowHeight) {
@@ -27,15 +34,28 @@ function setup() {
 function draw() {
   background(200);
   menu();
-  if (state === 'gamestart'){
+  if (state === 'keyBoardMode'){
     displayGrid(grid, rows, cols);
     stroke(10);
-    blockAI();
-    mouseHoover();
+    player();
+    keyboardMovement();
+    gridCheck();
   }
-  // if (state === 'AImirror'){
-  //   grid[playerX][playerY] = 0;  // mirrors ai
-  // }
+  else if (state === 'vsAI'){
+    displayGrid(grid,rows,cols);
+    stroke(10);
+    mouseHoover();
+    blockAI();
+  }
+  else if (state === 'mouseCursorMode'){
+    displayGrid(grid, rows, cols);
+    stroke(10);
+    mouseHoover();
+    gridCheck();
+  }
+  else{
+    win();
+  }
 }
 
 function windowResized() {
@@ -48,10 +68,11 @@ function windowResized() {
 }
 
 function blockAI(){
-  if (state === 'gamestart'){
+  if (state === 'vsAI'){
     grid[playerY][playerX] = 2;
-    if (grid != grid[playerY][playerX]){
+    if (grid !== grid[playerY][playerX]){
       let math = random(1, 100);
+      // chooses a direction within a random number
       if (math < 25 && playerY > 0){
         playerY -= 1;
       }
@@ -70,22 +91,19 @@ function blockAI(){
 
 
 function mousePressed() {
-  let cellSize = width/cols;
-
-  let xCoord = floor(mouseX / cellSize);
-  let yCoord = floor(mouseY / cellSize);
-  if (state = 'menu'){
-    if (mouseX > windowWidth && mouseY > windowHeight){
-      state = 'gamestart';
+  if (state === 'menu'){
+    if (mouseX > 15 && mouseX < 150
+      && mouseY > 900 && mouseY < 950){
+        state = 'vsAI';
+      }
+    if (mouseX > 250 && mouseX < 750
+      && mouseY > 150 && mouseY < 350){
+      state = 'mouseCursorMode';
     }
-  }
-  if (state = 'gamestart'){
-    if (grid[yCoord][xCoord] === 1) {
-      grid[yCoord][xCoord] = 0;
-    }
-    else {
-      grid[yCoord][xCoord] = 0;
-    }
+    if (mouseX > 250 && mouseX < 750
+      && mouseY > 500 && mouseY < 700){
+        state = 'keyBoardMode';
+      }
   }
 }
 
@@ -123,46 +141,67 @@ function createRandom2dArray(cols, rows) {
   for (let x = 0; x < cols; x++) {
     randomGrid.push([]);
     for (let y = 0; y < rows; y++) {
-      if (random(100) < 50) {
-        randomGrid[x].push(1);
-      }
-      else {
-        randomGrid[x].push(0);
-      }
+      randomGrid[x].push(1);
     }
   }
   return randomGrid;
 }
 
+// playertrail
+function player(){
+  grid[playerY][playerX] = 0;
+}
+
 function menu(){
   if (state === 'menu'){
-    text('Click anywhere to start', 325,400)
+    rect(250, 150, 500,200);
+    text('MouseCursor Mode', 435,250);
+    rect(250, 500, 500, 200);
+    text('Keyboard Mode', 445,600);
+    rect(15,900,135, 50);
+    text('Experimental AI Mode', 25, 925);
   }
 }
 
-
+// when mouse cursor is over a grid space it turns it to defualt
 function mouseHoover(){
   let cellSize = width/cols;
   let xCoord = floor(mouseX / cellSize);
   let yCoord = floor(mouseY / cellSize);
 
-  if (grid[yCoord][xCoord] === 1 || 2) {
+  if (grid[yCoord][xCoord] > 0) {
     grid[yCoord][xCoord] = 0;
   }
 }
 
-// function timer(){
-//   if (state === 'gamestart'){
-//     if (millis > 10000){
-//       if(grid[yCoord][xCoord] != 2){
-//         state === 'win';
-//       }
-//     }
-//   }
-// }
 
-// function win(){
-//   if (state === 'win'){
-//     text('you win', 100,100,100)
-//   }
-// }
+function keyboardMovement(){
+  if (key === 'w' && playerY > 0){
+    playerY -= 1;
+  }
+  else if (key === 'a' && playerX > 0){
+    playerX -= 1;
+  }
+  else if (key === 's' && playerY < cols - 1){
+    playerY += 1;
+  }
+  else if (key === 'd' && playerX < rows - 1){
+    playerX += 1;
+  }
+  grid[playerY][playerX] = 2;
+}
+
+// when random block on grid is default switches
+function gridCheck(){ 
+  if (grid[randomX][randomY] === 0){
+    state = 'win';
+  }
+}
+
+function win(){
+  if (state === 'win'){
+    background(200);
+    text('Congratulations! you found the target block', 350,400);
+    text('Now refresh the page.', 415, 425);
+  }
+}
