@@ -7,19 +7,17 @@
 //wasd keyboard movement
 
 let grid;
-let rows = 20;
-let cols = 20;
+let rows = 30;
+let cols = 30;
 let state = 'menu'
 
 //adjusts the starting pos of the player block
 let playerX = 10;
 let playerY = 10;
 
-let randomX = 13;
-let randomY = 17;
+let targetX = 13;
+let targetY = 17;
 
-// let randomX = round(random(0,19));
-// let randomY = round(random(0,19));
 
 function setup() {
   if (windowWidth > windowHeight) {
@@ -191,9 +189,9 @@ function keyboardMovement(){
   grid[playerY][playerX] = 2;
 }
 
-// when random block on grid is default switches
+// when target block on grid is white. Game ends
 function gridCheck(){ 
-  if (grid[randomX][randomY] === 0){
+  if (grid[targetX][targetY] === 0){
     state = 'win';
   }
 }
